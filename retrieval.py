@@ -7,21 +7,15 @@ from rank_bm25 import BM25Okapi
 import logging
 
 from embedding import embed_batch  # use your embedding.py
-from answer_generation import model  # your LLM model instance
-
-from concurrent.futures import ThreadPoolExecutor
+from config import (
+    BM25_TOP_K,
+    DEFAULT_PASS1_K,
+    DEFAULT_PASS2_K,
+    SIMILARITY_THRESHOLD,
+    DEFAULT_QUERY_VARIANTS,
+)
 
 logger = logging.getLogger("hackrx")
-
-# Constants should ideally come from your config.py
-# but here set default int values explicitly:
-BM25_TOP_K = 50
-DEFAULT_PASS1_K = 100
-DEFAULT_PASS2_K = 50
-SIMILARITY_THRESHOLD = 0.05
-DEFAULT_QUERY_VARIANTS = 5
-
-executor = ThreadPoolExecutor()
 
 def build_bm25_index(chunks: List[str]) -> BM25Okapi:
     """Build BM25 index from tokenized chunks."""
@@ -54,23 +48,31 @@ def soft_keyword_boost(query: str, candidates: List[Tuple[float, str]]) -> List[
     return boosted
 
 async def expand_question(question: str, max_variants: int = DEFAULT_QUERY_VARIANTS) -> List[str]:
-    """Generate question variants for richer retrieval, via external LLM."""
-    prompt = f"Generate up to {max_variants} variations of the following question:\n{question}"
+    """
+    Lightweight query expansion without an extra LLM call.
+    Keeps retrieval fast and avoids dependency on a second generation request.
+    """
+    max_variants = max(1, int(max_variants))
+    normalized = re.sub(r"\s+", " ", question).strip()
 
-    def _generate_variants():
-        try:
-            res = model.generate_content(
-                prompt,
-                generation_config=...  # your gemini generation config here
-            )
-            lines = [l.strip("1234567890.-• ") for l in res.text.split('\n') if l.strip()]
-            variants = list(dict.fromkeys([question] + lines))
-            return variants[:max_variants]
-        except Exception as e:
-            logger.warning(f"Failed to expand question variants: {e}")
-            return [question]
+    variants = [
+        normalized,
+        f"Provide details about: {normalized}",
+        f"What does this document say about: {normalized}",
+        f"Find policy clauses for: {normalized}",
+    ]
 
-    return await asyncio.get_event_loop().run_in_executor(executor, _generate_variants)
+    # Preserve order and uniqueness.
+    deduped = []
+    seen = set()
+    for q in variants:
+        key = q.lower()
+        if key not in seen:
+            seen.add(key)
+            deduped.append(q)
+        if len(deduped) >= max_variants:
+            break
+    return deduped
 
 async def dual_pass_retrieve(
     question: str,

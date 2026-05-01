@@ -1,1 +1,539 @@
+# =============================================================================
+# HACKRX ENHANCED LLM SYSTEM - .gitignore
+# =============================================================================
+# This file specifies which files and directories should be ignored by Git
+
+# =============================================================================
+# ENVIRONMENT & SECRETS
+# =============================================================================
+
+# Environment variables and configuration
 .env
+.env.local
+.env.production
+.env.staging
+.env.development
+config.local.py
+secrets.json
+*.key
+*.pem
+*.p12
+
+# API keys and tokens
+api_keys.txt
+tokens.txt
+credentials.json
+
+# =============================================================================
+# PYTHON SPECIFIC
+# =============================================================================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.virtualenv
+.venv
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# =============================================================================
+# MACHINE LEARNING & AI MODELS
+# =============================================================================
+
+# Downloaded models and embeddings
+models/
+*.model
+*.bin
+*.h5
+*.pkl
+*.pickle
+*.joblib
+
+# Sentence transformers cache
+.cache/
+sentence_transformers/
+
+# Hugging Face transformers cache
+transformers_cache/
+.transformers_cache/
+
+# FAISS indexes
+*.faiss
+*.index
+
+# Model checkpoints
+checkpoints/
+*.ckpt
+*.pth
+*.safetensors
+
+# Training data and datasets
+data/
+dataset/
+datasets/
+*.csv
+*.tsv
+*.json
+*.jsonl
+*.parquet
+
+# Embeddings and vectors
+embeddings/
+vectors/
+*.npy
+*.npz
+
+# =============================================================================
+# DOCUMENT PROCESSING & OCR
+# =============================================================================
+
+# Temporary files from document processing
+temp/
+tmp/
+temporary/
+.tmp/
+
+# Processed documents cache
+processed_docs/
+doc_cache/
+
+# OCR output files
+ocr_output/
+extracted_text/
+
+# Image processing cache
+image_cache/
+processed_images/
+
+# PDF processing cache
+pdf_cache/
+
+# =============================================================================
+# LOGS & MONITORING
+# =============================================================================
+
+# Log files
+*.log
+*.log.*
+logs/
+log/
+application.log
+error.log
+access.log
+debug.log
+
+# Monitoring and metrics
+metrics/
+*.metrics
+
+# Performance profiling
+*.prof
+*.profile
+
+# =============================================================================
+# DATABASE & STORAGE
+# =============================================================================
+
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Database dumps
+*.sql
+*.dump
+
+# Redis dumps
+dump.rdb
+
+# Vector databases
+*.vec
+chromadb/
+pinecone_cache/
+weaviate_data/
+
+# =============================================================================
+# CACHING & TEMPORARY FILES
+# =============================================================================
+
+# General cache
+cache/
+.cache/
+*.cache
+
+# Request/response cache
+request_cache/
+response_cache/
+
+# File processing cache
+file_cache/
+upload_cache/
+
+# Temporary uploads
+uploads/
+uploaded_files/
+
+# System temporary files
+*.tmp
+*.temp
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =============================================================================
+# DEVELOPMENT & IDE
+# =============================================================================
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# =============================================================================
+# DOCKER & CONTAINERS
+# =============================================================================
+
+# Docker
+Dockerfile.local
+docker-compose.override.yml
+.dockerignore.local
+
+# Container volumes
+volumes/
+docker_data/
+
+# =============================================================================
+# TESTING & QA
+# =============================================================================
+
+# Test databases
+test.db
+test.sqlite
+test_*.db
+
+# Test outputs
+test_output/
+test_results/
+test_reports/
+
+# Coverage reports
+.coverage
+htmlcov/
+
+# Load testing
+locust_reports/
+*.har
+
+# =============================================================================
+# DEPLOYMENT & INFRASTRUCTURE
+# =============================================================================
+
+# Deployment scripts (if containing secrets)
+deploy_prod.sh
+deploy.local.sh
+
+# Infrastructure as code (if containing secrets)
+terraform.tfstate
+terraform.tfstate.backup
+*.tfvars
+
+# Kubernetes secrets
+*-secret.yaml
+secret-*.yaml
+
+# =============================================================================
+# BACKUP & RECOVERY
+# =============================================================================
+
+# Backup files
+backups/
+backup/
+*.backup
+*.bak
+*.old
+
+# Archive files (large)
+*.zip
+*.tar
+*.gz
+*.7z
+*.rar
+
+# =============================================================================
+# FRONTEND (if you add a frontend later)
+# =============================================================================
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Next.js
+.next/
+out/
+
+# React
+build/
+
+# =============================================================================
+# CLOUD & EXTERNAL SERVICES
+# =============================================================================
+
+# AWS
+.aws/
+*.pem
+
+# Google Cloud
+gcp-service-account.json
+*.json
+
+# Azure
+.azure/
+
+# =============================================================================
+# DOCUMENTATION BUILDS
+# =============================================================================
+
+# Sphinx documentation
+docs/_build/
+_build/
+
+# LaTeX
+*.aux
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# =============================================================================
+# SYSTEM FILES
+# =============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# =============================================================================
+# PROJECT SPECIFIC
+# =============================================================================
+
+# Processed chunks cache
+chunks_cache/
+*.chunks
+
+# Custom model files
+custom_models/
+fine_tuned_models/
+
+# Experimental files
+experiments/
+playground/
+sandbox/
+
+# Local configuration overrides
+config_local.py
+settings_local.py
+local_settings.py
+
+# Development utilities
+dev_tools/
+dev_scripts/
+debug_output/
+
+# Performance benchmarks
+benchmarks/
+performance_tests/
+
+# Sample data (if large)
+sample_data/
+examples/large_files/
+
+# =============================================================================
+# SECURITY & COMPLIANCE
+# =============================================================================
+
+# Security scan results
+security_reports/
+vulnerability_reports/
+
+# Compliance documents (if containing sensitive info)
+compliance_private/
+audit_logs/
+
+# SSL certificates (if not meant for version control)
+*.crt
+*.cert
+*.ca-bundle
+
+# =============================================================================
+# MISC
+# =============================================================================
+
+# Editor backups
+*.orig
+*.rej
+
+# OS generated files
+.DS_Store?
+Icon?
+.Spotlight-V100
+.Trashes
+
+# Network drives (Windows)
+*.url
+
+# JetBrains IDEs
+*.ipr
+
+# Local history
+.history/
+
+# Temporary patches
+*.patch
+*.diff
+
+# Custom ignore patterns (add your own)
+# *.custom
+# custom_ignore/
+
+# End of .gitignore

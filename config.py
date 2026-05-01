@@ -1,5 +1,7 @@
-import os
 
+from dotenv import load_dotenv
+load_dotenv()  # Load variables from .env
+import os
 DEFAULT_PASS1_K = int(os.getenv("DEFAULT_PASS1_K", "100"))
 DEFAULT_PASS2_K = int(os.getenv("DEFAULT_PASS2_K", "50"))
 BM25_TOP_K = int(os.getenv("BM25_TOP_K", "50"))
@@ -8,7 +10,8 @@ DEFAULT_QUERY_VARIANTS = int(os.getenv("DEFAULT_QUERY_VARIANTS", "5"))
 
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
-SECRET_TOKEN = os.getenv("SECRET_TOKEN", "")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
+GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
 
 MAX_WORKERS = min(64, (os.cpu_count() or 4) * 4)
 

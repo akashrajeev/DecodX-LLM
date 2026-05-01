@@ -1,12 +1,11 @@
 import asyncio
 import re
 import logging
-import google.generativeai as genai
+from groq import Groq
 
-from config import GEMINI_API_KEY, MAX_OUTPUT_TOKENS
+from config import GROQ_API_KEY, GROQ_MODEL, MAX_OUTPUT_TOKENS
 
-genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-1.5-flash")
+client = Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
 
 executor = None  # inject or import from embedding.py / main app
 
@@ -29,16 +28,24 @@ Answer:"""
 
     def _gen():
         try:
-            res = model.generate_content(
-                prompt,
-                generation_config=genai.types.GenerationConfig(
-                    temperature=0.1,
-                    max_output_tokens=MAX_OUTPUT_TOKENS,
-                    top_p=0.8,
-                    top_k=25
-                ),
+            if client is None:
+                logger.error("GROQ_API_KEY is missing. Set it in your .env file.")
+                return "Information not found in the policy."
+
+            res = client.chat.completions.create(
+                model=GROQ_MODEL,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": "Answer strictly from the provided context. If the answer is not in context, say: Information not found in the policy."
+                    },
+                    {"role": "user", "content": prompt},
+                ],
+                temperature=0.1,
+                max_tokens=MAX_OUTPUT_TOKENS,
             )
-            ans = re.sub(r'\s+', ' ', res.text.strip())
+            content = (res.choices[0].message.content or "").strip()
+            ans = re.sub(r'\s+', ' ', content)
             return ans if ans else "Information not found in the policy."
         except Exception as e:
             logger.error(f"Error generating answer: {e}")
